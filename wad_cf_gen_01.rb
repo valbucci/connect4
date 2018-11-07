@@ -37,13 +37,13 @@ module CF_Game
 
 		#Sets myname as "Andrei Rotariu". Returns for use in @game.start.
 		def created_by
-			myname = "Andrei Rotariu"
+			myname = "Andrei Rotariu & Valerio Bucci"
 			return(myname)
 		end
 
 		#Sets studentid
 		def student_id
-			studentid = 51876039
+			studentid = "51876039 & 51875080"
 		end
 
 		#Prints game status message
