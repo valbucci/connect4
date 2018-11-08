@@ -137,7 +137,7 @@ module CF_Game
 				while i >= 0 and @matrix[c][i] != "_"
 					i -= 1
 				end
-				@matrix[c][i] = token
+				setmatrixcolumnvalue(c, i, token)
 			else
 				return false
 			end
