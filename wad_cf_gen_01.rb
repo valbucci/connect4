@@ -133,16 +133,16 @@ module CF_Game
 		# Places the token at the bottom of the grid
 		def placeToken(c, token)
 			i = @matrix[c].length - 1
-			if @matrix[c][0] != "_"
-				while @matrix[c][i] >= 0 and @matrix[c][i] != "_"
+			if @matrix[c][0] == "_"
+				while i >= 0 and @matrix[c][i] != "_"
 					i += 1
 				end
-				@matrix[c][i] = token
+				setmatrixcolumnvalue(c, i, token)
 			else
-				return False
+				return false
 			end
 
-			return True
+			return true
 		end
 
 		#Prints Grid
