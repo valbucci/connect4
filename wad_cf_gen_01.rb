@@ -114,12 +114,13 @@ module CF_Game
 		#Resets matrix to empty form.
 		def clearcolumns
 			@matrix = [
-				["_", "_", "_", "_", "_", "_", "_"],
-				["_", "_", "_", "_", "_", "_", "_"],
-				["_", "_", "_", "_", "_", "_", "_"],
-				["_", "_", "_", "_", "_", "_", "_"],
-				["_", "_", "_", "_", "_", "_", "_"],
-				["_", "_", "_", "_", "_", "_", "_"]
+				["_", "_", "_", "_", "_", "_"],
+				["_", "_", "_", "_", "_", "_"],
+				["_", "_", "_", "_", "_", "_"],
+				["_", "_", "_", "_", "_", "_"],
+				["_", "_", "_", "_", "_", "_"],
+				["_", "_", "_", "_", "_", "_"],
+				["_", "_", "_", "_", "_", "_"]
 			]
 		end
 
@@ -183,40 +184,38 @@ module CF_Game
 			@output.puts(divider)
 		end
 
-		#Checks for a win. Excludes diagonals from right to left.
+		#Checks for a win.
 		#ADAPTED FROM WAD_CF_SPEC FILE.
 		def checkwinner
-			#Check for horizontal wins player 1
+			# check columns to see if player 1 won
 			i = 0
 			while i < 7 do
-				if @matrix[i][0] == "O" && @matrix[i][1] == "O" && @matrix[i][2] == "O" && @matrix[i][3] == "O"
+				if @matrix[i][0] == "O" && @matrix[i][1] == "O" && @matrix[i][2] == "O"  && @matrix[i][3] == "O"
 					winner = 1
-				elsif @matrix[i][1] == "O" && @matrix[i][2] == "O" && @matrix[i][3] == "O" && @matrix[i][4] == "O"
+				elsif @matrix[i][1] == "O" && @matrix[i][2] == "O" && @matrix[i][3] == "O"  && @matrix[i][4] == "O"
 					winner = 1
-				elsif @matrix[i][2] == "O" && @matrix[i][3] == "O" && @matrix[i][4] == "O" && @matrix[i][5] == "O"
+				elsif @matrix[i][2] == "O" && @matrix[i][3] == "O" && @matrix[i][4] == "O"  && @matrix[i][5] == "O"
 					winner = 1
-				elsif @matrix[i][3] == "O" && @matrix[i][4] == "O" && @matrix[i][5] == "O" && @matrix[i][6] == "O"
+				elsif @matrix[i][3] == "O" && @matrix[i][4] == "O" && @matrix[i][5] == "O"  && @matrix[i][6] == "O"
 					winner = 1
 				end
 				i += 1
 			end
-
-			#Check for horizontal wins player 2
+			# check columns to see if player 2 won
 			i = 0
 			while i < 7 do
-				if @matrix[i][0] == "X" && @matrix[i][1] == "X" && @matrix[i][2] == "X" && @matrix[i][3] == "X"
+				if @matrix[i][0] == "X" && @matrix[i][1] == "X" && @matrix[i][2] == "X"  && @matrix[i][3] == "X"
 					winner = 2
-				elsif @matrix[i][1] == "X" && @matrix[i][2] == "X" && @matrix[i][3] == "X" && @matrix[i][4] == "X"
+				elsif @matrix[i][1] == "X" && @matrix[i][2] == "X" && @matrix[i][3] == "X"  && @matrix[i][4] == "X"
 					winner = 2
-				elsif @matrix[i][2] == "X" && @matrix[i][3] == "X" && @matrix[i][4] == "X" && @matrix[i][5] == "X"
+				elsif @matrix[i][2] == "X" && @matrix[i][3] == "X" && @matrix[i][4] == "X"  && @matrix[i][5] == "X"
 					winner = 2
-				elsif @matrix[i][3] == "X" && @matrix[i][4] == "X" && @matrix[i][5] == "X" && @matrix[i][6] == "X"
+				elsif @matrix[i][3] == "X" && @matrix[i][4] == "X" && @matrix[i][5] == "X"  && @matrix[i][6] == "X"
 					winner = 2
 				end
 				i += 1
 			end
-
-			#Check for vertical wins player 1
+			# check row to see if player 1 won
 			i = 0
 			while i < 6 do
 				if @matrix[0][i] == "O" && @matrix[1][i] == "O" && @matrix[2][i] == "O"  && @matrix[3][i] == "O"
@@ -230,9 +229,7 @@ module CF_Game
 				end
 				i += 1
 			end
-
-
-			#Check for vertical wins player 2
+			# check columns to see if player 2 won
 			i = 0
 			while i < 6 do
 				if @matrix[0][i] == "X" && @matrix[1][i] == "X" && @matrix[2][i] == "X"  && @matrix[3][i] == "X"
@@ -246,8 +243,7 @@ module CF_Game
 				end
 				i += 1
 			end
-
-			#Check for diagonal player 1 (TOP LEFT TO RIGHT)
+			# check diagonals (top to right) to see if player 1 won
 			i = 0
 			while i < 4 do
 				if @matrix[i][0] == "O" && @matrix[i+1][1] == "O" && @matrix[i+2][2] == "O"  && @matrix[i+3][3] == "O"
@@ -277,40 +273,38 @@ module CF_Game
 				end
 				i += 1
 			end
-
-			#Check for diagonal player 2 (TOP LEFT TO RIGHT)
+			# check diagonals (top to right) to see if player 2 won
 			i = 0
 			while i < 4 do
-				if @matrix[i][0] == "O" && @matrix[i+1][1] == "O" && @matrix[i+2][2] == "O"  && @matrix[i+3][3] == "O"
-					winner = 1
-				elsif @matrix[i+1][0] == "O" && @matrix[i+2][1] == "O" && @matrix[i+3][2] == "O"  && @matrix[i+4][3] == "O"
-					winner = 1
-				elsif @matrix[i+2][0] == "O" && @matrix[i+3][1] == "O" && @matrix[i+4][2] == "O"  && @matrix[i+5][3] == "O"
-					winner = 1
-				elsif @matrix[i][1] == "O" && @matrix[i+1][2] == "O" && @matrix[i+2][3] == "O"  && @matrix[i+3][4] == "O"
-					winner = 1
-				elsif @matrix[i+1][1] == "O" && @matrix[i+2][2] == "O" && @matrix[i+3][3] == "O"  && @matrix[i+4][4] == "O"
-					winner = 1
-				elsif @matrix[i+2][1] == "O" && @matrix[i+3][2] == "O" && @matrix[i+4][3] == "O"  && @matrix[i+5][4] == "O"
-					winner = 1
-				elsif @matrix[i][2] == "O" && @matrix[i+1][3] == "O" && @matrix[i+2][4] == "O"  && @matrix[i+3][5] == "O"
-					winner = 1
-				elsif @matrix[i+1][2] == "O" && @matrix[i+2][3] == "O" && @matrix[i+3][4] == "O"  && @matrix[i+4][5] == "O"
-					winner = 1
-				elsif @matrix[i+2][2] == "O" && @matrix[i+3][3] == "O" && @matrix[i+4][4] == "O"  && @matrix[i+5][5] == "O"
-					winner = 1
-				elsif @matrix[i][3] == "O" && @matrix[i+1][4] == "O" && @matrix[i+2][5] == "O"  && @matrix[i+3][6] == "O"
-					winner = 1
-				elsif @matrix[i+1][3] == "O" && @matrix[i+2][4] == "O" && @matrix[i+3][5] == "O"  && @matrix[i+4][6] == "O"
-					winner = 1
-				elsif @matrix[i+2][3] == "O" && @matrix[i+3][4] == "O" && @matrix[i+4][5] == "O"  && @matrix[i+5][6] == "O"
-					winner = 1
+				if @matrix[i][0] == "X" && @matrix[i+1][1] == "X" && @matrix[i+2][2] == "X"  && @matrix[i+3][3] == "X"
+					winner = 2
+				elsif @matrix[i+1][0] == "X" && @matrix[i+2][1] == "X" && @matrix[i+3][2] == "X"  && @matrix[i+4][3] == "X"
+					winner = 2
+				elsif @matrix[i+2][0] == "X" && @matrix[i+3][1] == "X" && @matrix[i+4][2] == "X"  && @matrix[i+5][3] == "X"
+					winner = 2
+				elsif @matrix[i][1] == "X" && @matrix[i+1][2] == "X" && @matrix[i+2][3] == "X"  && @matrix[i+3][4] == "X"
+					winner = 2
+				elsif @matrix[i+1][1] == "X" && @matrix[i+2][2] == "X" && @matrix[i+3][3] == "X"  && @matrix[i+4][4] == "X"
+					winner = 2
+				elsif @matrix[i+2][1] == "X" && @matrix[i+3][2] == "X" && @matrix[i+4][3] == "X"  && @matrix[i+5][4] == "X"
+					winner = 2
+				elsif @matrix[i][2] == "X" && @matrix[i+1][3] == "X" && @matrix[i+2][4] == "X"  && @matrix[i+3][5] == "X"
+					winner = 2
+				elsif @matrix[i+1][2] == "X" && @matrix[i+2][3] == "X" && @matrix[i+3][4] == "X"  && @matrix[i+4][5] == "X"
+					winner = 2
+				elsif @matrix[i+2][2] == "X" && @matrix[i+3][3] == "X" && @matrix[i+4][4] == "X"  && @matrix[i+5][5] == "X"
+					winner = 2
+				elsif @matrix[i][3] == "X" && @matrix[i+1][4] == "X" && @matrix[i+2][5] == "X"  && @matrix[i+3][6] == "X"
+					winner = 2
+				elsif @matrix[i+1][3] == "X" && @matrix[i+2][4] == "X" && @matrix[i+3][5] == "X"  && @matrix[i+4][6] == "X"
+					winner = 2
+				elsif @matrix[i+2][3] == "X" && @matrix[i+3][4] == "X" && @matrix[i+4][5] == "X"  && @matrix[i+5][6] == "X"
+					winner = 2
 				end
 				i += 1
 			end
-
-			#Check for diagonal player 1 (TOP RIGHT TO LEFT)
-			i = @matrix.length
+			# check diagonals (top to left) to see if player 1 won
+			i = 0
 			while i < 4 do
 				if @matrix[i][0] == "O" && @matrix[i-1][1] == "O" && @matrix[i-2][2] == "O"  && @matrix[i-3][3] == "O"
 					winner = 1
@@ -339,40 +333,39 @@ module CF_Game
 				end
 				i += 1
 			end
-
-			#Check for diagonal player 2 (TOP RIGHT TO LEFT)
-			i = matrix.length
+			# check diagonals (top to left) to see if player 2 won
+			i = 0
 			while i < 4 do
-				if @matrix[i][0] == "O" && @matrix[i-1][1] == "O" && @matrix[i-2][2] == "O"  && @matrix[i-3][3] == "O"
-					winner = 1
-				elsif @matrix[i-1][0] == "O" && @matrix[i-2][1] == "O" && @matrix[i-3][2] == "O"  && @matrix[i-4][3] == "O"
-					winner = 1
-				elsif @matrix[i-2][0] == "O" && @matrix[i-3][1] == "O" && @matrix[i-4][2] == "O"  && @matrix[i-5][3] == "O"
-					winner = 1
-				elsif @matrix[i][1] == "O" && @matrix[i-1][2] == "O" && @matrix[i-2][3] == "O"  && @matrix[i-3][4] == "O"
-					winner = 1
-				elsif @matrix[i-1][1] == "O" && @matrix[i-2][2] == "O" && @matrix[i-3][3] == "O"  && @matrix[i-4][4] == "O"
-					winner = 1
-				elsif @matrix[i-2][1] == "O" && @matrix[i-3][2] == "O" && @matrix[i-4][3] == "O"  && @matrix[i-5][4] == "O"
-					winner = 1
-				elsif @matrix[i][2] == "O" && @matrix[i-1][3] == "O" && @matrix[i-2][4] == "O"  && @matrix[i-3][5] == "O"
-					winner = 1
-				elsif @matrix[i-1][2] == "O" && @matrix[i-2][3] == "O" && @matrix[i-3][4] == "O"  && @matrix[i-4][5] == "O"
-					winner = 1
-				elsif @matrix[i-2][2] == "O" && @matrix[i-3][3] == "O" && @matrix[i-4][4] == "O"  && @matrix[i-5][5] == "O"
-					winner = 1
-				elsif @matrix[i][3] == "O" && @matrix[i-1][4] == "O" && @matrix[i-2][5] == "O"  && @matrix[i-3][6] == "O"
-					winner = 1
-				elsif @matrix[i-1][3] == "O" && @matrix[i-2][4] == "O" && @matrix[i-3][5] == "O"  && @matrix[i-4][6] == "O"
-					winner = 1
-				elsif @matrix[i-2][3] == "O" && @matrix[i-3][4] == "O" && @matrix[i-4][5] == "O"  && @matrix[i-5][6] == "O"
-					winner = 1
+				if @matrix[i][0] == "X" && @matrix[i-1][1] == "X" && @matrix[i-2][2] == "X"  && @matrix[i-3][3] == "X"
+					winner = 2
+				elsif @matrix[i-1][0] == "X" && @matrix[i-2][1] == "X" && @matrix[i-3][2] == "X"  && @matrix[i-4][3] == "X"
+					winner = 2
+				elsif @matrix[i-2][0] == "X" && @matrix[i-3][1] == "X" && @matrix[i-4][2] == "X"  && @matrix[i-5][3] == "X"
+					winner = 2
+				elsif @matrix[i][1] == "X" && @matrix[i-1][2] == "X" && @matrix[i-2][3] == "X"  && @matrix[i-3][4] == "X"
+					winner = 2
+				elsif @matrix[i-1][1] == "X" && @matrix[i-2][2] == "X" && @matrix[i-3][3] == "X"  && @matrix[i-4][4] == "X"
+					winner = 2
+				elsif @matrix[i-2][1] == "X" && @matrix[i-3][2] == "X" && @matrix[i-4][3] == "X"  && @matrix[i-5][4] == "X"
+					winner = 2
+				elsif @matrix[i][2] == "X" && @matrix[i-1][3] == "X" && @matrix[i-2][4] == "X"  && @matrix[i-3][5] == "X"
+					winner = 2
+				elsif @matrix[i-1][2] == "X" && @matrix[i-2][3] == "X" && @matrix[i-3][4] == "X"  && @matrix[i-4][5] == "X"
+					winner = 2
+				elsif @matrix[i-2][2] == "X" && @matrix[i-3][3] == "X" && @matrix[i-4][4] == "X"  && @matrix[i-5][5] == "X"
+					winner = 2
+				elsif @matrix[i][3] == "X" && @matrix[i-1][4] == "X" && @matrix[i-2][5] == "X"  && @matrix[i-3][6] == "X"
+					winner = 2
+				elsif @matrix[i-1][3] == "X" && @matrix[i-2][4] == "X" && @matrix[i-3][5] == "X"  && @matrix[i-4][6] == "X"
+					winner = 2
+				elsif @matrix[i-2][3] == "X" && @matrix[i-3][4] == "X" && @matrix[i-4][5] == "X"  && @matrix[i-5][6] == "X"
+					winner = 2
 				end
 				i += 1
 			end
-
 			@winner = winner
-
+			# return the winner
+			return(@winner)
 		end
 		# Any code/methods aimed at passing the RSpect tests should be added above.
 
