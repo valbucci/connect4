@@ -148,7 +148,19 @@ module CF_Game
 
 		#Tests only checked for prescence of module.
 		def displayframecolumnvalues
-
+			title = " 1 2 3 4 5 6 7 "
+			divider = "+-+-+-+-+-+-+-+"
+			@output.puts(title)
+			@output.puts(divider)
+			@matrix[0].each_with_index do |item, row|
+				@output.print "|"
+				@matrix.each do |slot|
+					@output.print slot[row]
+					@output.print "|"
+				end
+				@output.puts("")
+			end
+			@output.puts(divider)
 		end
 
 		#Checks for a win. Excludes diagonals from right to left.
