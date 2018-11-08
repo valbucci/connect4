@@ -56,7 +56,7 @@ module CF_Game
 			while !validInput
 				input = gets().to_i
 				if input > 0 and input <= 7
-					validInput = g.placeToken(input - 1, g.getplayer1)
+					validInput = g.placeToken(input - 1, "X")
 
 					if !validInput
 						g.displaynomoreroomerror
@@ -87,7 +87,7 @@ module CF_Game
 			while !validInput
 				input = gets().to_i
 				if input > 0 and input <= 7
-					validInput = g.placeToken(input - 1, g.getplayer2)
+					validInput = g.placeToken(input - 1, "O")
 
 					if !validInput
 						g.displaynomoreroomerror
