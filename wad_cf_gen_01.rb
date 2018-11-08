@@ -98,7 +98,7 @@ module CF_Game
 
 		#Calls player1.
 		def getplayer1
-			@player1
+			return @player1
 		end
 
 		#Sets player2 token as 'X'.
@@ -108,7 +108,7 @@ module CF_Game
 
 		#Calls player2.
 		def getplayer2
-			@player2
+			return @player2
 		end
 
 		#Resets matrix to empty form.
