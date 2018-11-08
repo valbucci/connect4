@@ -85,7 +85,7 @@ module CF_Game
 		def displaynomoreroomerror
 			output.puts("No more room.")
 		end
-		
+
 		#Needs to be given a value for "p" when called. Subs value of "p" into printed message.
 		def displaywinner(p)
 			output.puts("Player #{p} wins.")
@@ -129,6 +129,21 @@ module CF_Game
 				@matrix[c][i] = v
 			end
 		end
+		
+		# Places the token at the bottom of the grid
+		def placeToken(c, token)
+			i = @matrix[c].length - 1
+			if @matrix[c][0] != "_"
+				while @matrix[c][i] >= 0 and @matrix[c][i] != "_"
+					i += 1
+				end
+				@matrix[c][i] = token
+			else
+				return False
+			end
+
+			return True
+		end
 
 		#Prints Grid
 		def displayemptyframe
@@ -166,7 +181,6 @@ module CF_Game
 		#Checks for a win. Excludes diagonals from right to left.
 		#ADAPTED FROM WAD_CF_SPEC FILE.
 		def checkwinner
-
 			#Check for horizontal wins player 1
 			i = 0
 			while i < 7 do
