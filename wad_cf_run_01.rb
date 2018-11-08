@@ -36,8 +36,78 @@ module CF_Game
 	if game == "1"
 		
 	# Any code added to command line game should be added below.
+
+		g.start
+		g.clearcolumns
+
 	
-	#	g.start
+
+		while playing
+
+			#g.  Show tokens entered
+
+			#Player1 Turn
+			g.displayframecolumnvalues
+			g.displayplayer1prompt
+
+			## Add token
+			validInput = false
+
+			while !validInput
+				input = gets().to_i
+				if input > 0 and input <= 7
+					validInput = g.placeToken(input - 1, g.getplayer1)
+
+					if !validInput
+						g.displaynomoreroomerror
+					end
+				elsif input == 0
+					# pause the game
+				else
+					g.displayinvalidinputerror
+				end
+			end
+
+
+			g.checkwinner
+
+			if g.winner == "X"
+				puts("Player 1 Wins!")
+				playing = false
+			end
+
+
+			#Player2 Turn
+			g.displayframecolumnvalues
+			g.displayplayer2prompt
+
+			## Add Token
+			validInput = false
+
+			while !validInput
+				input = gets().to_i
+				if input > 0 and input <= 7
+					validInput = g.placeToken(input - 1, g.getplayer2)
+
+					if !validInput
+						g.displaynomoreroomerror
+					end
+				elsif input == 0
+					# pause the game
+				else
+					g.displayinvalidinputerror
+				end
+			end
+
+			g.checkwinner
+
+			if g.winner == "O"
+				puts("Player 2 Wins!")
+				playing = false
+			end
+		end
+
+
 
 	
 	# Any code added to output the activity messages to the command line window should be added above.
