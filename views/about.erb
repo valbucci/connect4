@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<!-Adapted from https://www.w3schools.com/howto/howto_css_team.asp->
+<!-13/11/18->
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>About Us</title>
+
+		<style>
+
+			html{
+				box-sizing: border-box;
+			}
+
+			*, *:before, *:after {
+				box-sizing: inherit;
+			}
+
+			.column {
+				float: left;
+				width: 25%;
+				margin-top: 2vh;
+				padding: 0 1vw;
+			}
+
+			@media screen and (max-width: 650px) {
+			  .column {
+			    width: 100%;
+			    display: block;
+			  }
+			}
+
+			.card {
+				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
+			}
+
+			.container {
+				padding: 0 16px 4px;
+			}
+
+			.container::after, .row::after {
+				content: "";
+				clear: both;
+				display: table;
+			}
+
+			.title {
+				color: lightslategrey;
+			}
+
+			.row {
+				padding: 0 15px;
+			}
+
+			center {
+				width: 100%;
+			}
+
+
+		</style>
+
+	</head>
+
+	<body>
+		<nav class="grey darken-3">
+			<div class="nav-wrapper">
+				<a href="/" class="brand-logo center">
+					About Us
+				</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li><a href="/" class="">Home</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="row">
+			<div class="col s4 offset-s2">
+
+				<div class="card">
+					<img src="andrei.jpg" alt="Andrei Rotariu" style="width:100%">
+					<div class="container">
+						<h2>Andrei Rotariu</h2>
+						<p class="title">Web Application Developer</p>
+						<p>Student ID: 51876039</p>
+						<p>Quote: "I feel a certain 'connection' to this website."</p>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col s4">
+
+				<div class="card">
+					<img src="valerio.jpg" alt="Valerio Bucci" style="width:100%">
+					<div class="container">
+						<h2>Valerio Bucci</h2>
+						<p class="title">Web Application Developer</p>
+						<p>Student ID: 51875080</p>
+						<p>Quote: "I love whisky. I personally drink it with ice."</p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+</html>

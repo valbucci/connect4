@@ -20,7 +20,7 @@ module CF_Game
 		
 	rightInput = false
 	while not rightInput
-		@output.puts 'Enter "1" runs game in command-line window or "2" runs it in web browser.'
+		@output.puts 'Enter "1" runs game in command-line window and "2" runs game in web browser.'
 		game = g.getinput
 		system "cls"
 		if game == "1"
@@ -44,7 +44,7 @@ module CF_Game
 
 		while playing
 			while !pause and g.checkwinner == nil
-				#g.  Show tokens entered
+
 
 				#Player1 Turn
 				g.displayframecolumnvalues
@@ -124,7 +124,7 @@ get "/game" do
 end
 
 get "/about" do
-
+   erb :about
 end
 
 # Any code added to output the activity messages to a browser should be added above.

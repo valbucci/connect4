@@ -5,17 +5,18 @@
 ### Base Game
 - [x] Backend + 'Building Blocks'
 - [ ] Web Based Version
-- [ ] Improvements Tweaks
+- [ ] Improvements and Tweaks
 - [ ] Bugfixing
+- [ ] Optimization
 
 ### Additional Features
 
 ## Design
 
 ### Views
-- [ ] Landing Page
+- [x] Landing Page
 - [ ] Game Page
-- [ ] About Page
+- [x] About Page
 
 ### Assets
 - [ ] Logo
@@ -25,12 +26,17 @@
 ## Documentation
 
 ### Manual
-- [ ] Description
-- [ ] System Requirements
+- [x] Description
+- [x] System Requirements
 - [ ] Features and Functionalities
 - [ ] Use of Features:
 	- Step-by-step
 	- Screenshots
+	
+
+### Design Document
+- [x] Flow Chart
+- [ ] Web Page Design
 
 ### Group Assessment Contribution
 - [ ] Complete digitally and include in .zip file
