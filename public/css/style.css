@@ -63,3 +63,33 @@ body {
 .welcomeText div {
 	display: inline-block;
 }
+
+.gameContainer {
+	display: block;
+	position: relative;
+	height: 100%;
+}
+
+.playingGrid {
+	background-color: blue;
+	width: auto;
+	margin: auto;
+	border-spacing: 5px;
+	border-collapse: separate;
+}
+
+.playingGrid tr {
+	height: 50px;
+	padding: 5px 0;
+}
+
+.playingGrid td {
+	width: 50px;
+	padding: 0 5px;
+	background-color: white;
+	border-radius: 50%;
+}
+
+.maxHeight {
+	height: 100%;
+}
