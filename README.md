@@ -3,7 +3,7 @@
 ## General
 
 ### Base Game
-- [ ] Backend + 'Building Blocks'
+- [x] Backend + 'Building Blocks'
 - [ ] Web Based Version
 - [ ] Improvements Tweaks
 - [ ] Bugfixing
