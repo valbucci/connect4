@@ -124,7 +124,7 @@ get "/game" do
 end
 
 get "/about" do
-   erb :about
+   erb :about, :layout => :cssandjs
 end
 
 # Any code added to output the activity messages to a browser should be added above.

@@ -9,3 +9,7 @@ document.querySelector('#startGame').addEventListener("click", function() {
 	}
 	xmlhttp.send();
 })
+
+document.querySelector('.playingGrid td').addEventListener("hover", function() {
+	this.css.backgroundColor = "red"
+})

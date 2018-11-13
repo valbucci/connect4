@@ -79,12 +79,12 @@ body {
 }
 
 .playingGrid tr {
-	height: 50px;
+	height: 70px;
 	padding: 5px 0;
 }
 
 .playingGrid td {
-	width: 50px;
+	width: 70px;
 	padding: 0 5px;
 	background-color: white;
 	border-radius: 50%;
