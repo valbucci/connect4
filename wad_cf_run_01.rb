@@ -116,11 +116,11 @@ end
 # Any code added to output the activity messages to a browser should be added below.
 
 get "/" do
-	erb :home
+	erb :home, :layout => :cssandjs
 end
 
 get "/game" do
-	puts "Game goes here"
+	erb :game
 end
 
 get "/about" do
