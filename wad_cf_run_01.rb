@@ -120,7 +120,7 @@ get "/" do
 end
 
 get "/game" do
-
+	puts "Game goes here"
 end
 
 get "/about" do
