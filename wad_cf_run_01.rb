@@ -37,83 +37,73 @@ module CF_Game
 		
 	# Any code added to command line game should be added below.
 
-		g.start
-		g.clearcolumns
 
-	
+			pause = false
+			g.start
+			g.clearcolumns
 
-		while playing
+			while playing
+				while !pause and g.checkwinner == nil
+					#g.  Show tokens entered
 
-			#g.  Show tokens entered
+					#Player1 Turn
+					g.displayframecolumnvalues
+					g.displaycurrentplayerprompt
 
-			#Player1 Turn
-			g.displayframecolumnvalues
-			g.displayplayer1prompt
+					## Add token
+					validInput = false
 
-			## Add token
-			validInput = false
+					while !validInput
+						input = gets().to_i
+						if input > 0 and input <= 7
+							validInput = g.placeToken(input - 1)
 
-			while !validInput
-				input = gets().to_i
-				if input > 0 and input <= 7
-					validInput = g.placeToken(input - 1, "X")
-
-					if !validInput
-						g.displaynomoreroomerror
+							if !validInput
+								g.displaynomoreroomerror
+							end
+						elsif input == 0
+							puts("--------------- GAME PAUSED ---------------")
+							validInput = true
+							pause = true
+						else
+							g.displayinvalidinputerror
+						end
 					end
-				elsif input == 0
-					# pause the game
-				else
-					g.displayinvalidinputerror
 				end
-			end
+				if g.winner != nil
+					g.displayframecolumnvalues
+					puts(g.displaywinner(g.waiting))
+				end
 
-
-			g.checkwinner
-
-			if g.winner == "X"
-				puts("Player 1 Wins!")
-				playing = false
-			end
-
-
-			#Player2 Turn
-			g.displayframecolumnvalues
-			g.displayplayer2prompt
-
-			## Add Token
-			validInput = false
-
-			while !validInput
-				input = gets().to_i
-				if input > 0 and input <= 7
-					validInput = g.placeToken(input - 1, "O")
-
-					if !validInput
-						g.displaynomoreroomerror
+				anOption = false
+				while !anOption
+					g.displaymenu
+					puts("Choose 1: ")
+					choice = gets.chomp
+					anOption = true
+					if choice == "1"
+						puts("Resuming... \n")
+					elsif choice == "2"
+						# Create a new game
+						puts("Creating new match... \n")
+						g = Game.new(@input, @output)
+						g.start
+						g.clearcolumns
+					elsif choice == "9"
+						# Exit the game
+						playing = false
+					else
+						puts("ERROR: #{choice} is not an Option. Try again")
+						anOption = false
 					end
-				elsif input == 0
-					# pause the game
-				else
-					g.displayinvalidinputerror
 				end
+				# The player chose an option
+				pause = false
 			end
+		# Any code added to output the activity messages to the command line window should be added above.
 
-			g.checkwinner
-
-			if g.winner == "O"
-				puts("Player 2 Wins!")
-				playing = false
-			end
+			exit	# Does not allow command-line game to run code below relating to web-based version
 		end
-
-
-
-	
-	# Any code added to output the activity messages to the command line window should be added above.
-
-		exit	# Does not allow command-line game to run code below relating to web-based version
-	end
 
 end
 # End modules

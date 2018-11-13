@@ -11,8 +11,8 @@ module CF_Game
 	TOKEN2 = "X"
 
 	class Game
-		attr_reader :matrix, :player1, :player2, :template, :input, :output, :turn, :turnsleft, :winner, :played, :score, :resulta, :resultb, :guess
-		attr_writer :matrix, :player1, :player2, :template, :input, :output, :turn, :turnsleft, :winner, :played, :score, :resulta, :resultb, :guess
+		attr_reader :matrix, :player1, :player2, :template, :input, :output, :turn, :waiting, :turnsleft, :winner, :played, :score, :resulta, :resultb, :guess
+		attr_writer :matrix, :player1, :player2, :template, :input, :output, :turn, :waiting, :turnsleft, :winner, :played, :score, :resulta, :resultb, :guess
 		
 		def initialize(input, output)
 			@input = input
@@ -26,124 +26,146 @@ module CF_Game
 		
 		# Any code/methods aimed at passing the RSpect tests should be added below.
 
-		#Prints a series of messages when @game.start is called.
+		# Prints a welcome message
 		def start
-			output.puts("Welcome to Connect 4!")
-			output.puts("Created by:#{created_by}")
-			output.puts("Game started.")
-			output.puts("Player 1: #{TOKEN1} and Player 2: #{TOKEN2}")
-			output.puts("Enter column number to place token.")
+			@output.puts("Welcome to Connect 4!")
+			@output.puts("Created by:#{created_by}")
+			setplayer1
+			setplayer2
+			@turn = getplayer1
+			@waiting = getplayer2
+			@output.puts("Game started.")
+			@output.puts("Player 1: #{TOKEN1} and Player 2: #{TOKEN2}")
+			@output.puts("Enter column number to place token.")
 		end
-
-		#Sets myname as "Andrei Rotariu". Returns for use in @game.start.
+		
+		# Returns the student name
 		def created_by
-			myname = "Andrei Rotariu & Valerio Bucci"
-			return(myname)
+			return "Andrei Rotariu & Valerio Bucci"
 		end
 
-		#Sets studentid
+		# Returns the student ID
 		def student_id
 			studentid = "51876039 & 51875080"
 		end
 
-		#Prints game status message
+		# Display begin game message
 		def displaybegingame
-			output.puts("Begin game.")
+			@output.puts("Begin game.")
 		end
 
-		#Printsgame status message
+		# Display new game created message
 		def displaynewgamecreated
-			output.puts("New game created.")
+			@output.puts("New game created.")
 		end
 
-		#Prints game status message
+		# Sends a finish message
 		def finish
-			output.puts("Game finished.")
+			@output.puts("Game finished.")
 		end
 
-		#Prints menu
+		# Displays the menu
 		def displaymenu
-			output.puts("Menu: (1)Start | (2)New | (9)Exit\n")
+			@output.puts("Menu: (1)Start | (2)New | (9)Exit\n")
 		end
 
-		#Prints message
+
+		# Prompts player 1
 		def displayplayer1prompt
-			output.puts("Player 1 to enter token (0 returns to menu).")
+			@output.puts("Player 1 to enter token (0 returns to menu).")
 		end
 
-		#Prints message
+		# Prompts player 2
 		def displayplayer2prompt
-			output.puts("Player 2 to enter token (0 returns to menu).")
+			@output.puts("Player 2 to enter token (0 returns to menu).")
 		end
 
-		#Prints error message
+		# Prompts player basing on the turn
+		def displaycurrentplayerprompt
+			if @turn == getplayer1
+				displayplayer1prompt
+			else
+				displayplayer2prompt
+			end
+		end
+
+		# Displays an invalid input error message
 		def displayinvalidinputerror
-			output.puts("Invalid input.")
+			@output.puts("Invalid input.")
 		end
 
-		#Prints message
+		# Displays a no more room error message
 		def displaynomoreroomerror
-			output.puts("No more room.")
+			@output.puts("No more room.")
 		end
 
-		#Needs to be given a value for "p" when called. Subs value of "p" into printed message.
-		def displaywinner(p)
-			output.puts("Player #{p} wins.")
+		# Displays winning player
+		def displaywinner(playerToken)
+			if playerToken == getplayer1
+				player = 1
+			else
+				player = 2
+			end
+			@output.puts("Player #{player} wins.")
 		end
 
-		#Sets player1 token as 'O'.
+		# Sets player 1 token
 		def setplayer1
 			@player1 = TOKEN1
 		end
 
-		#Calls player1.
+		# Gets player 1 token
 		def getplayer1
 			return @player1
 		end
 
-		#Sets player2 token as 'X'.
+		# Sets player 2 token
 		def setplayer2
 			@player2 = TOKEN2
 		end
 
-		#Calls player2.
+		# Gets player 2 token
 		def getplayer2
 			return @player2
 		end
 
-		#Resets matrix to empty form.
+		# Initialises each position in each column in matrix as _
 		def clearcolumns
 			@matrix = [
-				["_", "_", "_", "_", "_", "_"],
-				["_", "_", "_", "_", "_", "_"],
-				["_", "_", "_", "_", "_", "_"],
-				["_", "_", "_", "_", "_", "_"],
-				["_", "_", "_", "_", "_", "_"],
-				["_", "_", "_", "_", "_", "_"],
-				["_", "_", "_", "_", "_", "_"]
-			]
+						["_", "_", "_", "_", "_", "_"],
+						["_", "_", "_", "_", "_", "_"],
+						["_", "_", "_", "_", "_", "_"],
+						["_", "_", "_", "_", "_", "_"],
+						["_", "_", "_", "_", "_", "_"],
+						["_", "_", "_", "_", "_", "_"],
+						["_", "_", "_", "_", "_", "_"]
+					]
 		end
 
-		#Checks the value of a particular position in @matrix.
-		def getcolumnvalue(a, b)
-			value = @matrix[a][b]
+		# Checks if a cell is occupied by a player's token
+		def isFilled(c, i)
+			return @matrix[c][i] == TOKEN1 || @matrix[c][i] == TOKEN2
 		end
 
+		# Gets a column from a given position in matrix
+		def getcolumnvalue(c, i)
+			return @matrix[c][i]
+		end
 
+		# Sets column value at given position
 		def setmatrixcolumnvalue(c, i, v)
-			if @matrix[c][i] == "_"
-				@matrix[c][i] = v
-			end
+			@matrix[c][i] = v
 		end
-		
+
 		# Places the token at the bottom of the grid
-		def placeToken(c, token)
+		def placeToken(c)
 			i = @matrix[c].length - 1
-			if @matrix[c][0] == "_"
+			if !isFilled(c, 0)
 				while i >= 0 and @matrix[c][i] != "_"
 					i -= 1
 				end
-				setmatrixcolumnvalue(c, i, token)
+				setmatrixcolumnvalue(c, i, @turn)
+				@turn, @waiting = @waiting, @turn
 			else
 				return false
 			end
@@ -151,23 +173,21 @@ module CF_Game
 			return true
 		end
 
-		#Prints Grid
+		# Displays the empty matrix as a table 7 columns by 6 rows
 		def displayemptyframe
 			title = " 1 2 3 4 5 6 7 "
-			rowdivider = "+-+-+-+-+-+-+-+"
-			emptyrow = "|_|_|_|_|_|_|_|"
-
-			output.puts("#{title}")
-			output.puts("#{rowdivider}")
-
-
-			for index in 1..7
-				output.puts("#{emptyrow}")
-				output.puts("#{rowdivider}")
+			divider = "+-+-+-+-+-+-+-+"
+			row = "|_|_|_|_|_|_|_|"
+			@output.puts("#{title}")
+			for i in 1..7
+				@output.puts("#{divider}")
+			end
+			for i in 1..6
+				@output.puts("#{row}")
 			end
 		end
 
-		#Tests only checked for prescence of module.
+		# Displays the matrix with updated values
 		def displayframecolumnvalues
 			title = " 1 2 3 4 5 6 7 "
 			divider = "+-+-+-+-+-+-+-+"
@@ -184,8 +204,7 @@ module CF_Game
 			@output.puts(divider)
 		end
 
-		#Checks for a win.
-		#ADAPTED FROM WAD_CF_SPEC FILE.
+		# Checks if somebody won
 		def checkwinner
 			# check columns to see if player 1 won
 			i = 0
@@ -367,6 +386,7 @@ module CF_Game
 			# return the winner
 			return(@winner)
 		end
+
 		# Any code/methods aimed at passing the RSpect tests should be added above.
 
 	end
