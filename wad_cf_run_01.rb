@@ -22,6 +22,7 @@ module CF_Game
 	while not rightInput
 		@output.puts 'Enter "1" runs game in command-line window or "2" runs it in web browser.'
 		game = g.getinput
+		system "cls"
 		if game == "1"
 			rightInput = true
 			@output.puts "Command line game"
@@ -35,85 +36,97 @@ module CF_Game
 		
 	if game == "1"
 		
-	# Any code added to command line game should be added below.
+		# Any code added to command line game should be added below.
 
+		pause = false
+		g.start
+		g.clearcolumns
 
-			pause = false
-			g.start
-			g.clearcolumns
+		while playing
+			while !pause and g.checkwinner == nil
+				#g.  Show tokens entered
 
-			while playing
-				while !pause and g.checkwinner == nil
-					#g.  Show tokens entered
+				#Player1 Turn
+				g.displayframecolumnvalues
+				g.displaycurrentplayerprompt
 
-					#Player1 Turn
-					g.displayframecolumnvalues
-					g.displaycurrentplayerprompt
+				## Add token
+				validInput = false
 
-					## Add token
-					validInput = false
+				while !validInput
+					input = gets().to_i
+					system "cls"
+					if input > 0 and input <= 7
+						validInput = g.placeToken(input - 1)
 
-					while !validInput
-						input = gets().to_i
-						if input > 0 and input <= 7
-							validInput = g.placeToken(input - 1)
-
-							if !validInput
-								g.displaynomoreroomerror
-							end
-						elsif input == 0
-							puts("--------------- GAME PAUSED ---------------")
-							validInput = true
-							pause = true
-						else
-							g.displayinvalidinputerror
+						if !validInput
+							g.displaynomoreroomerror
 						end
-					end
-				end
-				if g.winner != nil
-					g.displayframecolumnvalues
-					puts(g.displaywinner(g.waiting))
-				end
-
-				anOption = false
-				while !anOption
-					g.displaymenu
-					puts("Choose 1: ")
-					choice = gets.chomp
-					anOption = true
-					if choice == "1"
-						puts("Resuming... \n")
-					elsif choice == "2"
-						# Create a new game
-						puts("Creating new match... \n")
-						g = Game.new(@input, @output)
-						g.start
-						g.clearcolumns
-					elsif choice == "9"
-						# Exit the game
-						playing = false
+					elsif input == 0
+						puts("--------------- GAME PAUSED ---------------")
+						validInput = true
+						pause = true
 					else
-						puts("ERROR: #{choice} is not an Option. Try again")
-						anOption = false
+						g.displayinvalidinputerror
 					end
 				end
-				# The player chose an option
-				pause = false
 			end
-		# Any code added to output the activity messages to the command line window should be added above.
+			if g.winner != nil
+				system "cls"
+				g.displayframecolumnvalues
+				g.displaywinner(g.waiting)
+				g.finish
+			end
 
-			exit	# Does not allow command-line game to run code below relating to web-based version
+			anOption = false
+			while !anOption
+				g.displaymenu
+				puts("Choose an option: ")
+				choice = gets.chomp
+				anOption = true
+				system "cls"
+				if choice == "1"
+					puts("Resuming... \n")
+				elsif choice == "2"
+					# Create a new game
+					puts("Creating new match... \n")
+					g = Game.new(@input, @output)
+					g.clearcolumns
+					g.displaynewgamecreated
+				elsif choice == "9"
+					# Exit the game
+					playing = false
+				else
+					puts("ERROR: #{choice} is not an Option. Try again")
+					anOption = false
+				end
+			end
+			# The player chose an option
+			pause = false
 		end
+	# Any code added to output the activity messages to the command line window should be added above.
 
+		exit	# Does not allow command-line game to run code below relating to web-based version
+	end
 end
 # End modules
 
 # Sinatra routes
 
-	# Any code added to output the activity messages to a browser should be added below.
+# Any code added to output the activity messages to a browser should be added below.
 
+get "/" do
+	erb :home
+end
 
+get "/game" do
 
-	# Any code added to output the activity messages to a browser should be added above.
+end
+
+get "/about" do
+
+end
+
+# Any code added to output the activity messages to a browser should be added above.
 
 # End program
