@@ -13,10 +13,6 @@ module CF_Game
 	@output = STDOUT
 	g = Game.new(@input, @output)
 	playing = true
-	input = ""
-	option = 0
-	turn = 0
-	placed = nil
 		
 	rightInput = false
 	while not rightInput
@@ -108,25 +104,28 @@ module CF_Game
 
 		exit	# Does not allow command-line game to run code below relating to web-based version
 	end
+	$g = g
 end
 # End modules
 
-# Sinatra routes
+	# Sinatra routes
 
-# Any code added to output the activity messages to a browser should be added below.
+	# Any code added to output the activity messages to a browser should be added below.
 
-get "/" do
-	erb :home, :layout => :cssandjs
-end
+	# Initialise the game
 
-get "/game" do
-	erb :game
-end
+	get "/" do
+		erb :home, :layout => :cssandjs
+	end
 
-get "/about" do
-   erb :about, :layout => :cssandjs
-end
+	get "/game" do
+		erb :game
+	end
 
-# Any code added to output the activity messages to a browser should be added above.
+	get "/about" do
+	   erb :about, :layout => :cssandjs
+	end
+
+	# Any code added to output the activity messages to a browser should be added above.
 
 # End program

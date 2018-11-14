@@ -17,6 +17,11 @@ module CF_Game
 		def initialize(input, output)
 			@input = input
 			@output = output
+			clearcolumns
+			setplayer1
+			setplayer2
+			@turn = getplayer1
+			@waiting = getplayer2
 		end
 		
 		def getinput
@@ -29,13 +34,9 @@ module CF_Game
 		# Prints a welcome message
 		def start
 			@output.puts("Welcome to Connect 4!")
-			@output.puts("Created by:#{created_by}")
-			setplayer1
-			setplayer2
-			@turn = getplayer1
-			@waiting = getplayer2
+			@output.puts("Created by: #{created_by} \nStudent IDs: #{student_id}")
 			@output.puts("Game started.")
-			@output.puts("Player 1: #{TOKEN1} and Player 2: #{TOKEN2}")
+			@output.puts("Player 1: #{getplayer1} and Player 2: #{getplayer2}")
 			@output.puts("Enter column number to place token.")
 		end
 		
@@ -46,7 +47,7 @@ module CF_Game
 
 		# Returns the student ID
 		def student_id
-			studentid = "51876039 & 51875080"
+			return "51876039 & 51875080"
 		end
 
 		# Display begin game message
