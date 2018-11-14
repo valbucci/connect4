@@ -93,3 +93,15 @@ body {
 .maxHeight {
 	height: 100%;
 }
+
+.filled {
+	background-size: cover;
+}
+
+.filled.X{
+	background-image: url(/images/andrei.jpg)
+}
+
+.filled.O{
+	background-image: url(/images/valerio.jpg)
+}

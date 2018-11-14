@@ -122,6 +122,14 @@ end
 		erb :game
 	end
 
+	get "/game/:column" do
+		if $g.placeToken(params[:column].to_i)
+			"SUCCESS"
+		else
+			"No room on this column."
+		end
+	end
+
 	get "/about" do
 	   erb :about, :layout => :cssandjs
 	end

@@ -1,13 +1,10 @@
 <div class="gameContainer">
 	<div class="maxHeight valign-wrapper">
 		<table class="playingGrid">
-			<%
-			$g.setmatrixcolumnvalue(0, 0, "O")
-			%>
 			<% for i in 0..5 %>
 				<tr>
 				<% for c in 0..6 %>
-					<td<% if $g.isFilled(c, i) %> class="filled"<% end %>></td>
+					<td<% if $g.isFilled(c, i) %> class="filled <%= $g.getcolumnvalue(c, i) %>"<% end %>></td>
 				<% end %>
 				</tr>
 			<% end %>
