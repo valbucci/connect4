@@ -17,11 +17,17 @@ module CF_Game
 		def initialize(input, output)
 			@input = input
 			@output = output
+			newgame
+		end
+
+		# Initialises every variable for a new game
+		def newgame
 			clearcolumns
 			setplayer1
 			setplayer2
 			@turn = getplayer1
 			@waiting = getplayer2
+			@winner = nil
 		end
 		
 		def getinput
@@ -39,7 +45,7 @@ module CF_Game
 			@output.puts("Player 1: #{getplayer1} and Player 2: #{getplayer2}")
 			@output.puts("Enter column number to place token.")
 		end
-		
+
 		# Returns the student name
 		def created_by
 			return "Andrei Rotariu & Valerio Bucci"
@@ -101,15 +107,10 @@ module CF_Game
 		end
 
 		# Displays winning player
-		def displaywinner(playerToken)
-			if playerToken == getplayer1
-				player = 1
-			else
-				player = 2
-			end
-			@output.puts("Player #{player} wins.")
+		def displaywinner()
+			@output.puts("Player #{@winner} wins.")
 		end
-
+		
 		# Sets player 1 token
 		def setplayer1
 			@player1 = TOKEN1

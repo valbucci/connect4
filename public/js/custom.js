@@ -1,3 +1,4 @@
+var turn = undefined
 document.querySelector('#startGame').addEventListener("click", function() {
 	// Contact the server to get the playing field
 	xmlhttp = new XMLHttpRequest()
@@ -8,21 +9,32 @@ document.querySelector('#startGame').addEventListener("click", function() {
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 			// Print the playing field
 			showGrid()
+			document.querySelector("#btnRestart").addEventListener("click", function() {
+				restartGame()
+			})
 		}
 	}
 	xmlhttp.send();
 })
 
-function addListeners() {
+function addTdListeners() {
 	document.querySelectorAll('#playingField td').forEach(function(td) {
 		// When the cursor is over a slot we want to highlight the entire column with its empty slots and show where the token will be placed
 		td.addEventListener("mouseover", function() {
 			var col = getChildNum(td) + 1
-			document.querySelectorAll('#playingField tr td:nth-child('+col+')').forEach(function(slot) {
+			var columnNSlots = document.querySelectorAll('#playingField tr td:nth-child('+col+')')
+			columnNSlots.forEach(function(slot) {
 				if(!slot.classList.contains('filled')) {
-					slot.style.backgroundColor = "darkgrey"
+					slot.style.backgroundColor = "lightgrey"
 				}
 			})
+			var i = columnNSlots.length - 1
+			while(i > -1 && columnNSlots[i].classList.contains('filled')) {
+				i--
+			}
+			if(i > -1) {
+				columnNSlots[i].style.backgroundColor = "grey"
+			}
 		})
 		// When the cursor exits the slot border we want to remove the highlight
 		td.addEventListener("mouseout", function() {
@@ -30,6 +42,7 @@ function addListeners() {
 			document.querySelectorAll('#playingField tr td:nth-child('+col+')').forEach(function(slot) {
 				if(!slot.classList.contains('filled')) {
 					slot.style.backgroundColor = "white"
+					slot.style.backgroundImage = "none"
 				}
 			})
 		})
@@ -49,7 +62,7 @@ function showGrid() {
 		// If there is a response with no errors
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 			document.querySelector('#playingField').innerHTML = xmlhttp.responseText
-			addListeners()
+			addTdListeners()
 		}
 	}
 	xmlhttp.send();
@@ -62,9 +75,25 @@ function insertToken(column) {
 	xmlhttp.onreadystatechange = function() {
 		// If there is a response with no errors
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-			if(xmlhttp.responseText != "SUCCESS") {
-				M.toast({html: xmlhttp.responseText})
+			response = JSON.parse(xmlhttp.responseText)
+			if(response['msg'] == "TURN") {
+				turn = response['data']
+			} else {
+				M.toast({html: response['data']})
 			}
+			showGrid()
+		}
+	}
+	xmlhttp.send();
+}
+
+function restartGame() {
+	xmlhttp = new XMLHttpRequest()
+	url = '/restart'
+	xmlhttp.open("GET", url, true);
+	xmlhttp.onreadystatechange = function() {
+		// If there is a response with no errors
+		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 			showGrid()
 		}
 	}

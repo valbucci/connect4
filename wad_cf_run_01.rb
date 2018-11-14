@@ -70,7 +70,7 @@ module CF_Game
 			if g.winner != nil
 				system "cls"
 				g.displayframecolumnvalues
-				g.displaywinner(g.waiting)
+				g.displaywinner()
 				g.finish
 			end
 
@@ -123,11 +123,23 @@ end
 	end
 
 	get "/game/:column" do
-		if $g.placeToken(params[:column].to_i)
-			"SUCCESS"
+		if $g.winner == nil
+			if $g.placeToken(params[:column].to_i)
+				if $g.checkwinner == nil
+					'{"msg" : "TURN", "data" : "' + $g.waiting.to_s + '"}'
+				else
+					'{"msg" : "GAME_OVER", "data" : "Player ' + $g.winner.to_s + ' wins!"}'
+				end
+			else
+				'{"msg" : "NO_ROOM", "data" : "No room on this column."}'
+			end
 		else
-			"No room on this column."
+			'{"msg" : "GAME_OVER", "data" : "Player ' + $g.winner.to_s + ' wins!"}'
 		end
+	end
+
+	get "/restart" do
+		$g.newgame
 	end
 
 	get "/about" do

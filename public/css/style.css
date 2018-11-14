@@ -76,6 +76,8 @@ body {
 	margin: auto;
 	border-spacing: 5px;
 	border-collapse: separate;
+	padding: 5px 5px;
+	box-shadow: 0 -5px 0 darkblue, 5px 5px 10px grey;
 }
 
 .playingGrid tr {
@@ -88,6 +90,7 @@ body {
 	padding: 0 5px;
 	background-color: white;
 	border-radius: 50%;
+	box-shadow:	inset 0 -5px 0 darkblue;
 }
 
 .maxHeight {
@@ -99,9 +102,32 @@ body {
 }
 
 .filled.X{
-	background-image: url(/images/andrei.jpg)
+	background-image: url(/images/O.jpg)
 }
 
 .filled.O{
-	background-image: url(/images/valerio.jpg)
+	background-image: url(/images/X.jpg)
+}
+
+#matchResult {
+	width: 80vw;
+	margin: auto;
+}
+
+#matchResult .card-title {
+	font-weight: bold;
+}
+
+#restartBtn {
+	margin-bottom: 16px;
+}
+
+#restartBtn:hover {
+	cursor: pointer;
+}
+
+#backBtn {
+	display: inline-block;
+	font-weight: normal;
+	font-size: unset;
 }
