@@ -1,13 +1,15 @@
 # connect4
 
+### The program was completed over a series of meetings in coordination. Github was used for version control.
+
 ## General
 
 ### Base Game
 - [x] Backend + 'Building Blocks'
-- [ ] Web Based Version
-- [ ] Improvements and Tweaks
-- [ ] Bugfixing
-- [ ] Optimization
+- [x] Web Based Version
+- [x] Improvements and Tweaks
+- [x] Bugfixing
+- [x] Optimization
 
 ### Additional Features
 
@@ -15,12 +17,12 @@
 
 ### Views
 - [x] Landing Page
-- [ ] Game Page
+- [x] Game Page
 - [x] About Page
 
 ### Assets
-- [ ] Logo
-- [ ] Playing Pieces
+- [x] Spinning Token
+- [x] Playing Pieces
 
 
 ## Documentation
@@ -28,15 +30,15 @@
 ### Manual
 - [x] Description
 - [x] System Requirements
-- [ ] Features and Functionalities
-- [ ] Use of Features:
+- [x] Features and Functionalities
+- [x] Use of Features:
 	- Step-by-step
 	- Screenshots
 	
 
 ### Design Document
 - [x] Flow Chart
-- [ ] Web Page Design
+- [x] Web Page Design
 
 ### Group Assessment Contribution
-- [ ] Complete digitally and include in .zip file
+- [x] Complete digitally and include in .zip file
