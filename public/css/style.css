@@ -131,3 +131,34 @@ body {
 	font-weight: normal;
 	font-size: unset;
 }
+
+.profiles {
+	width: 60%;
+	margin: auto;
+}
+
+.profiles .card-image {
+	width: 250px;
+	height: 250px;
+}
+
+.fullscreen {
+	position: absolute;
+	margin: 0;
+	height: 100vh;
+	width: 100vw;
+}
+
+.profWrap {
+	height: calc(100vh - 64px);
+}
+
+.card-content {
+	width: calc(90% - 250px);
+}
+
+.personal-details {
+	border-bottom: 1px solid lightgrey;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
