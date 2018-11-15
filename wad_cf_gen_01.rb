@@ -274,7 +274,7 @@ module CF_Game
 			# Check for win above
 			r = row - 1
 			c = col - 1
-			while score < 4 and r >= 0 and c >= 0 and @matrix[col][r] == player
+			while score < 4 and r >= 0 and c >= 0 and @matrix[c][r] == player
 				score += 1
 				r -= 1
 				c -= 1
@@ -299,7 +299,7 @@ module CF_Game
 			# Check for win above
 			r = row - 1
 			c = col + 1
-			while score < 4 and r >= 0 and c < @matrix.length and @matrix[col][r] == player
+			while score < 4 and r >= 0 and c < @matrix.length and @matrix[c][r] == player
 				score += 1
 				r -= 1
 				c += 1
