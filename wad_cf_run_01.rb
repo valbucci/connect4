@@ -123,7 +123,7 @@ end
 	get "/game/:column" do
 		if $g.winner == nil
 			if $g.placeToken(params[:column].to_i)
-				if $g.checkwinner == nil
+				if $g.winner == nil
 					'{"msg" : "TURN", "data" : "' + $g.waiting.to_s + '"}'
 				else
 					'{"msg" : "GAME_OVER", "data" : "Player ' + $g.winner.to_s + ' wins!"}'

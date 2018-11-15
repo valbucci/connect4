@@ -176,7 +176,7 @@ module CF_Game
 					i -= 1
 				end
 				setmatrixcolumnvalue(c, i, @turn)
-				checkwinner(c, i, tokenToPlayer(@turn))
+				checkwinner(c, i)
 				@turn, @waiting = @waiting, @turn
 			else
 				return false
@@ -309,21 +309,9 @@ module CF_Game
 		end
 		
 		# Checks if somebody won
-		def checkwinner(c, i, player)
-			checks = [
-				checkRow(c, i),
-				checkColumn(c, i),
-				checkDiagTopRight(c, i),
-				checkDiagTopLeft(c, i)
-			]
-
-			z = 0
-			while not checks[z] and z < checks.length
-				z += 1
-			end
-
+		def checkwinner(c, i)
 			# If a winner is found change @winner variable
-			if z < checks.length
+			if checkRow(c, i) || checkColumn(c, i) || checkDiagTopRight(c, i) || checkDiagTopLeft(c, i)
 				@winner = tokenToPlayer(@matrix[c][i])
 			end
 

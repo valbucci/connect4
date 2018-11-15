@@ -78,6 +78,8 @@ function insertToken(column) {
 			response = JSON.parse(xmlhttp.responseText)
 			if(response['msg'] == "TURN") {
 				turn = response['data']
+			} else if(response['msg'] == "GAME_OVER") {
+				M.toast({html: '<span>' + response['data'] + '</span><button onclick="restartGame()" class="btn-flat toast-action">Restart</button>'})
 			} else {
 				M.toast({html: response['data']})
 			}
@@ -95,6 +97,7 @@ function restartGame() {
 		// If there is a response with no errors
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 			showGrid()
+			M.Toast.dismissAll()
 		}
 	}
 	xmlhttp.send();
