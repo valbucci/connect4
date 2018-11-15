@@ -110,7 +110,7 @@ module CF_Game
 		def displaywinner()
 			@output.puts("Player #{@winner} wins.")
 		end
-		
+
 		# Sets player 1 token
 		def setplayer1
 			@player1 = TOKEN1
@@ -159,6 +159,15 @@ module CF_Game
 			@matrix[c][i] = v
 		end
 
+		# From the token returns the player's number
+		def tokenToPlayer(token)
+			if token == getplayer1
+				return 1
+			end
+
+			return 2
+		end
+
 		# Places the token at the bottom of the grid
 		def placeToken(c)
 			i = @matrix[c].length - 1
@@ -167,6 +176,7 @@ module CF_Game
 					i -= 1
 				end
 				setmatrixcolumnvalue(c, i, @turn)
+				checkwinner(c, i, tokenToPlayer(@turn))
 				@turn, @waiting = @waiting, @turn
 			else
 				return false
@@ -206,187 +216,119 @@ module CF_Game
 			@output.puts(divider)
 		end
 
+		def checkRow(col, row)
+			score = 1
+			player = @matrix[col][row]
+
+			# check for win on the left
+			c = col - 1
+			while score < 4 and c >= 0 and @matrix[c][row] == player
+				score += 1
+				c -= 1
+			end
+
+			# check for win on the right
+			c = col + 1
+			while score < 4 and c < @matrix.length and @matrix[c][row] == player
+				score += 1
+				c += 1
+			end
+
+			return score > 3
+		end
+
+		def checkColumn(col, row)
+			score = 1
+			player = @matrix[col][row]
+
+			# Check for win below
+			r = row + 1
+			while score < 4 and r < @matrix[col].length and @matrix[col][r] == player
+				score += 1
+				r += 1
+			end
+
+			# Check for win above
+			r = row - 1
+			while score < 4 and r >= 0 and @matrix[col][r] == player
+				score += 1
+				r -= 1
+			end
+
+			return score > 3
+		end
+
+		def checkDiagTopRight(col, row)
+			score = 1
+			player = @matrix[col][row]
+
+			# Check for win below
+			r = row + 1
+			c = col + 1
+			while score < 4 and r < @matrix[col].length and c < @matrix.length and @matrix[c][r] == player
+				score += 1
+				r += 1
+				c += 1
+			end
+
+			# Check for win above
+			r = row - 1
+			c = col - 1
+			while score < 4 and r >= 0 and c >= 0 and @matrix[col][r] == player
+				score += 1
+				r -= 1
+				c -= 1
+			end
+
+			return score > 3
+		end
+
+		def checkDiagTopLeft(col, row)
+			score = 1
+			player = @matrix[col][row]
+
+			# Check for win below
+			r = row + 1
+			c = col - 1
+			while score < 4 and r < @matrix[col].length and c >= 0 and @matrix[c][r] == player
+				score += 1
+				r += 1
+				c -= 1
+			end
+
+			# Check for win above
+			r = row - 1
+			c = col + 1
+			while score < 4 and r >= 0 and c < @matrix.length and @matrix[col][r] == player
+				score += 1
+				r -= 1
+				c += 1
+			end
+
+			return score > 3
+		end
+		
 		# Checks if somebody won
-		def checkwinner
-			# check columns to see if player 1 won
-			i = 0
-			while i < 7 do
-				if @matrix[i][0] == "O" && @matrix[i][1] == "O" && @matrix[i][2] == "O"  && @matrix[i][3] == "O"
-					winner = 1
-				elsif @matrix[i][1] == "O" && @matrix[i][2] == "O" && @matrix[i][3] == "O"  && @matrix[i][4] == "O"
-					winner = 1
-				elsif @matrix[i][2] == "O" && @matrix[i][3] == "O" && @matrix[i][4] == "O"  && @matrix[i][5] == "O"
-					winner = 1
-				elsif @matrix[i][3] == "O" && @matrix[i][4] == "O" && @matrix[i][5] == "O"  && @matrix[i][6] == "O"
-					winner = 1
-				end
-				i += 1
+		def checkwinner(c, i, player)
+			checks = [
+				checkRow(c, i),
+				checkColumn(c, i),
+				checkDiagTopRight(c, i),
+				checkDiagTopLeft(c, i)
+			]
+
+			z = 0
+			while not checks[z] and z < checks.length
+				z += 1
 			end
-			# check columns to see if player 2 won
-			i = 0
-			while i < 7 do
-				if @matrix[i][0] == "X" && @matrix[i][1] == "X" && @matrix[i][2] == "X"  && @matrix[i][3] == "X"
-					winner = 2
-				elsif @matrix[i][1] == "X" && @matrix[i][2] == "X" && @matrix[i][3] == "X"  && @matrix[i][4] == "X"
-					winner = 2
-				elsif @matrix[i][2] == "X" && @matrix[i][3] == "X" && @matrix[i][4] == "X"  && @matrix[i][5] == "X"
-					winner = 2
-				elsif @matrix[i][3] == "X" && @matrix[i][4] == "X" && @matrix[i][5] == "X"  && @matrix[i][6] == "X"
-					winner = 2
-				end
-				i += 1
+
+			# If a winner is found change @winner variable
+			if z < checks.length
+				@winner = tokenToPlayer(@matrix[c][i])
 			end
-			# check row to see if player 1 won
-			i = 0
-			while i < 6 do
-				if @matrix[0][i] == "O" && @matrix[1][i] == "O" && @matrix[2][i] == "O"  && @matrix[3][i] == "O"
-					winner = 1
-				elsif @matrix[1][i] == "O" && @matrix[2][i] == "O" && @matrix[3][i] == "O"  && @matrix[4][i] == "O"
-					winner = 1
-				elsif @matrix[2][i] == "O" && @matrix[3][i] == "O" && @matrix[4][i] == "O"  && @matrix[5][i] == "O"
-					winner = 1
-				elsif @matrix[3][i] == "O" && @matrix[4][i] == "O" && @matrix[5][i] == "O"  && @matrix[6][i] == "O"
-					winner = 1
-				end
-				i += 1
-			end
-			# check columns to see if player 2 won
-			i = 0
-			while i < 6 do
-				if @matrix[0][i] == "X" && @matrix[1][i] == "X" && @matrix[2][i] == "X"  && @matrix[3][i] == "X"
-					winner = 2
-				elsif @matrix[1][i] == "X" && @matrix[2][i] == "X" && @matrix[3][i] == "X"  && @matrix[4][i] == "X"
-					winner = 2
-				elsif @matrix[2][i] == "X" && @matrix[3][i] == "X" && @matrix[4][i] == "X"  && @matrix[5][i] == "X"
-					winner = 2
-				elsif @matrix[3][i] == "X" && @matrix[4][i] == "X" && @matrix[5][i] == "X"  && @matrix[6][i] == "X"
-					winner = 2
-				end
-				i += 1
-			end
-			# check diagonals (top to right) to see if player 1 won
-			i = 0
-			while i < 4 do
-				if @matrix[i][0] == "O" && @matrix[i+1][1] == "O" && @matrix[i+2][2] == "O"  && @matrix[i+3][3] == "O"
-					winner = 1
-				elsif @matrix[i+1][0] == "O" && @matrix[i+2][1] == "O" && @matrix[i+3][2] == "O"  && @matrix[i+4][3] == "O"
-					winner = 1
-				elsif @matrix[i+2][0] == "O" && @matrix[i+3][1] == "O" && @matrix[i+4][2] == "O"  && @matrix[i+5][3] == "O"
-					winner = 1
-				elsif @matrix[i][1] == "O" && @matrix[i+1][2] == "O" && @matrix[i+2][3] == "O"  && @matrix[i+3][4] == "O"
-					winner = 1
-				elsif @matrix[i+1][1] == "O" && @matrix[i+2][2] == "O" && @matrix[i+3][3] == "O"  && @matrix[i+4][4] == "O"
-					winner = 1
-				elsif @matrix[i+2][1] == "O" && @matrix[i+3][2] == "O" && @matrix[i+4][3] == "O"  && @matrix[i+5][4] == "O"
-					winner = 1
-				elsif @matrix[i][2] == "O" && @matrix[i+1][3] == "O" && @matrix[i+2][4] == "O"  && @matrix[i+3][5] == "O"
-					winner = 1
-				elsif @matrix[i+1][2] == "O" && @matrix[i+2][3] == "O" && @matrix[i+3][4] == "O"  && @matrix[i+4][5] == "O"
-					winner = 1
-				elsif @matrix[i+2][2] == "O" && @matrix[i+3][3] == "O" && @matrix[i+4][4] == "O"  && @matrix[i+5][5] == "O"
-					winner = 1
-				elsif @matrix[i][3] == "O" && @matrix[i+1][4] == "O" && @matrix[i+2][5] == "O"  && @matrix[i+3][6] == "O"
-					winner = 1
-				elsif @matrix[i+1][3] == "O" && @matrix[i+2][4] == "O" && @matrix[i+3][5] == "O"  && @matrix[i+4][6] == "O"
-					winner = 1
-				elsif @matrix[i+2][3] == "O" && @matrix[i+3][4] == "O" && @matrix[i+4][5] == "O"  && @matrix[i+5][6] == "O"
-					winner = 1
-				end
-				i += 1
-			end
-			# check diagonals (top to right) to see if player 2 won
-			i = 0
-			while i < 4 do
-				if @matrix[i][0] == "X" && @matrix[i+1][1] == "X" && @matrix[i+2][2] == "X"  && @matrix[i+3][3] == "X"
-					winner = 2
-				elsif @matrix[i+1][0] == "X" && @matrix[i+2][1] == "X" && @matrix[i+3][2] == "X"  && @matrix[i+4][3] == "X"
-					winner = 2
-				elsif @matrix[i+2][0] == "X" && @matrix[i+3][1] == "X" && @matrix[i+4][2] == "X"  && @matrix[i+5][3] == "X"
-					winner = 2
-				elsif @matrix[i][1] == "X" && @matrix[i+1][2] == "X" && @matrix[i+2][3] == "X"  && @matrix[i+3][4] == "X"
-					winner = 2
-				elsif @matrix[i+1][1] == "X" && @matrix[i+2][2] == "X" && @matrix[i+3][3] == "X"  && @matrix[i+4][4] == "X"
-					winner = 2
-				elsif @matrix[i+2][1] == "X" && @matrix[i+3][2] == "X" && @matrix[i+4][3] == "X"  && @matrix[i+5][4] == "X"
-					winner = 2
-				elsif @matrix[i][2] == "X" && @matrix[i+1][3] == "X" && @matrix[i+2][4] == "X"  && @matrix[i+3][5] == "X"
-					winner = 2
-				elsif @matrix[i+1][2] == "X" && @matrix[i+2][3] == "X" && @matrix[i+3][4] == "X"  && @matrix[i+4][5] == "X"
-					winner = 2
-				elsif @matrix[i+2][2] == "X" && @matrix[i+3][3] == "X" && @matrix[i+4][4] == "X"  && @matrix[i+5][5] == "X"
-					winner = 2
-				elsif @matrix[i][3] == "X" && @matrix[i+1][4] == "X" && @matrix[i+2][5] == "X"  && @matrix[i+3][6] == "X"
-					winner = 2
-				elsif @matrix[i+1][3] == "X" && @matrix[i+2][4] == "X" && @matrix[i+3][5] == "X"  && @matrix[i+4][6] == "X"
-					winner = 2
-				elsif @matrix[i+2][3] == "X" && @matrix[i+3][4] == "X" && @matrix[i+4][5] == "X"  && @matrix[i+5][6] == "X"
-					winner = 2
-				end
-				i += 1
-			end
-			# check diagonals (top to left) to see if player 1 won
-			i = 0
-			while i < 4 do
-				if @matrix[i][0] == "O" && @matrix[i-1][1] == "O" && @matrix[i-2][2] == "O"  && @matrix[i-3][3] == "O"
-					winner = 1
-				elsif @matrix[i-1][0] == "O" && @matrix[i-2][1] == "O" && @matrix[i-3][2] == "O"  && @matrix[i-4][3] == "O"
-					winner = 1
-				elsif @matrix[i-2][0] == "O" && @matrix[i-3][1] == "O" && @matrix[i-4][2] == "O"  && @matrix[i-5][3] == "O"
-					winner = 1
-				elsif @matrix[i][1] == "O" && @matrix[i-1][2] == "O" && @matrix[i-2][3] == "O"  && @matrix[i-3][4] == "O"
-					winner = 1
-				elsif @matrix[i-1][1] == "O" && @matrix[i-2][2] == "O" && @matrix[i-3][3] == "O"  && @matrix[i-4][4] == "O"
-					winner = 1
-				elsif @matrix[i-2][1] == "O" && @matrix[i-3][2] == "O" && @matrix[i-4][3] == "O"  && @matrix[i-5][4] == "O"
-					winner = 1
-				elsif @matrix[i][2] == "O" && @matrix[i-1][3] == "O" && @matrix[i-2][4] == "O"  && @matrix[i-3][5] == "O"
-					winner = 1
-				elsif @matrix[i-1][2] == "O" && @matrix[i-2][3] == "O" && @matrix[i-3][4] == "O"  && @matrix[i-4][5] == "O"
-					winner = 1
-				elsif @matrix[i-2][2] == "O" && @matrix[i-3][3] == "O" && @matrix[i-4][4] == "O"  && @matrix[i-5][5] == "O"
-					winner = 1
-				elsif @matrix[i][3] == "O" && @matrix[i-1][4] == "O" && @matrix[i-2][5] == "O"  && @matrix[i-3][6] == "O"
-					winner = 1
-				elsif @matrix[i-1][3] == "O" && @matrix[i-2][4] == "O" && @matrix[i-3][5] == "O"  && @matrix[i-4][6] == "O"
-					winner = 1
-				elsif @matrix[i-2][3] == "O" && @matrix[i-3][4] == "O" && @matrix[i-4][5] == "O"  && @matrix[i-5][6] == "O"
-					winner = 1
-				end
-				i += 1
-			end
-			# check diagonals (top to left) to see if player 2 won
-			i = 0
-			while i < 4 do
-				if @matrix[i][0] == "X" && @matrix[i-1][1] == "X" && @matrix[i-2][2] == "X"  && @matrix[i-3][3] == "X"
-					winner = 2
-				elsif @matrix[i-1][0] == "X" && @matrix[i-2][1] == "X" && @matrix[i-3][2] == "X"  && @matrix[i-4][3] == "X"
-					winner = 2
-				elsif @matrix[i-2][0] == "X" && @matrix[i-3][1] == "X" && @matrix[i-4][2] == "X"  && @matrix[i-5][3] == "X"
-					winner = 2
-				elsif @matrix[i][1] == "X" && @matrix[i-1][2] == "X" && @matrix[i-2][3] == "X"  && @matrix[i-3][4] == "X"
-					winner = 2
-				elsif @matrix[i-1][1] == "X" && @matrix[i-2][2] == "X" && @matrix[i-3][3] == "X"  && @matrix[i-4][4] == "X"
-					winner = 2
-				elsif @matrix[i-2][1] == "X" && @matrix[i-3][2] == "X" && @matrix[i-4][3] == "X"  && @matrix[i-5][4] == "X"
-					winner = 2
-				elsif @matrix[i][2] == "X" && @matrix[i-1][3] == "X" && @matrix[i-2][4] == "X"  && @matrix[i-3][5] == "X"
-					winner = 2
-				elsif @matrix[i-1][2] == "X" && @matrix[i-2][3] == "X" && @matrix[i-3][4] == "X"  && @matrix[i-4][5] == "X"
-					winner = 2
-				elsif @matrix[i-2][2] == "X" && @matrix[i-3][3] == "X" && @matrix[i-4][4] == "X"  && @matrix[i-5][5] == "X"
-					winner = 2
-				elsif @matrix[i][3] == "X" && @matrix[i-1][4] == "X" && @matrix[i-2][5] == "X"  && @matrix[i-3][6] == "X"
-					winner = 2
-				elsif @matrix[i-1][3] == "X" && @matrix[i-2][4] == "X" && @matrix[i-3][5] == "X"  && @matrix[i-4][6] == "X"
-					winner = 2
-				elsif @matrix[i-2][3] == "X" && @matrix[i-3][4] == "X" && @matrix[i-4][5] == "X"  && @matrix[i-5][6] == "X"
-					winner = 2
-				end
-				i += 1
-			end
-			@winner = winner
+
 			# return the winner
-			return(@winner)
+			return @winner
 		end
 
 		# Any code/methods aimed at passing the RSpect tests should be added above.

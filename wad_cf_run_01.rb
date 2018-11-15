@@ -29,7 +29,7 @@ module CF_Game
 			@output.puts "Invalid input! No game selected."
 		end
 	end
-		
+
 	if game == "1"
 		
 		# Any code added to command line game should be added below.
@@ -39,9 +39,7 @@ module CF_Game
 		g.clearcolumns
 
 		while playing
-			while !pause and g.checkwinner == nil
-
-
+			while !pause and g.winner == nil
 				#Player1 Turn
 				g.displayframecolumnvalues
 				g.displaycurrentplayerprompt
