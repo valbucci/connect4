@@ -311,7 +311,7 @@ module CF_Game
 		# Checks if somebody won
 		def checkwinner(c, i)
 			# If a winner is found change @winner variable
-			if checkRow(c, i) || checkColumn(c, i) || checkDiagTopRight(c, i) || checkDiagTopLeft(c, i)
+			if checkRow(c, i) or checkColumn(c, i) or checkDiagTopRight(c, i) or checkDiagTopLeft(c, i)
 				@winner = tokenToPlayer(@matrix[c][i])
 			end
 
