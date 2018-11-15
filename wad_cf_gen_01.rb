@@ -185,7 +185,7 @@ module CF_Game
 			return true
 		end
 
-		# Displays the empty matrix as a table 7 columns by 6 rows
+		# Displays the empty matrix as a table 7 columns by 6 rows # PART OF TESTS, NOT USED IN FINAL
 		def displayemptyframe
 			title = " 1 2 3 4 5 6 7 "
 			divider = "+-+-+-+-+-+-+-+"
